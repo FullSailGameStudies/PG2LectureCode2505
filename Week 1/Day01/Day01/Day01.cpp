@@ -18,9 +18,27 @@ void print(const std::vector<std::string>& names)
         std::cout << index++ << ". " << name << "\n";
 }
 
+std::string GetUserName()
+{
+    std::string msg = "Please enter your name: ";
+    std::string name = Input::GetString(msg);
+    return name;
+}
+
+void PrintMessage(std::string messageToPrint)
+{
+    int x = rand() % Console::GetWindowWidth();//0 -> width-1
+    int y = rand() % Console::GetWindowHeight();//0 -> height-1
+    Console::SetCursorPosition(x,y);
+
+    Console::Write(messageToPrint,(ConsoleColor) (rand() % 8));
+}
+
 
 int main()
 {
+    int ten = 10;
+    int pOne = AddOne(ten);
     //Input and Console examples   
     // 
     //std::string myName = Input::GetString("What is your name?");
@@ -65,6 +83,34 @@ int main()
     int diff = t1000.minus(7, 2);
 
 
+    /*
+        CHALLENGE:
+
+            Create a method above main.
+            Use the Input::GetString method.
+            Ask the user to enter their name.
+            Return the string.
+
+            In main, call the method and store the result.
+    */
+    std::string name = GetUserName();
+
+    /*
+        CHALLENGE:
+
+            Create a method above main.
+            Pass to it a string.
+            Using the Console methods, print the string anywhere in the console.
+            Change the foreground color.
+
+            In main, call the method and pass to it the string the 
+            user entered in the first challenge.
+
+    */
+    //while (true)
+    {
+        PrintMessage(name);
+    }
     /*
         CHALLENGE:
 
