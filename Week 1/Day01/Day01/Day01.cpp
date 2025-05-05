@@ -4,6 +4,7 @@
 #include "Calculator.h"
 #include "Console.h"
 #include "Input.h"
+#include <Menu.h>
 
 int AddOne(int localNumber)
 {
@@ -111,6 +112,17 @@ int main()
     {
         PrintMessage(name);
     }
+
+    Menu cafe;
+    cafe.AddMenuItem("coffee");
+    cafe.AddMenuItem("cookies");
+    cafe.AddMenuItem("brownies");
+    cafe.AddMenuItem("croissant");//index 3
+    cafe.AddMenuItem("beignet");
+    cafe.AddMenuItem("bagel");
+    cafe.AddMenuItem("milk");
+    cafe.AddMenuItem("burrito");//NO TEA!
+    cafe.AddMenuItem("sweet tea");
     /*
         CHALLENGE:
 

@@ -4,6 +4,7 @@
 const std::string Console::ESC = "\x1B";
 int Console::windowWidth = 100, Console::windowHeight = 50;
 
+//method DEFINITIONS
 void Console::ResizeWindow(int width, int height)
 {
 	windowWidth = width;

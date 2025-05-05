@@ -18,6 +18,7 @@ enum ConsoleColor
 class Console
 {
 public:
+    //method DECLARATIONS
     static void ResizeWindow(int width, int height);
     static int GetWindowWidth() { return windowWidth; }
     static int GetWindowHeight() { return windowHeight; }
