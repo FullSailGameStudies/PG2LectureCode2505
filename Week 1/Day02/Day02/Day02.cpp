@@ -1,6 +1,8 @@
 ﻿#include <iostream>
 #include <string>
 #include <vector>
+#include <Console.h>
+#include "FullSailCourse.h"
 
 bool postFix(std::string& hero)
 {
@@ -30,11 +32,59 @@ void print(const std::vector<int>& scores)
 
 void printInfo(const std::vector<int>& scores)
 {
+    //size() - # of items that are IN the vector
+    //capacity() - size of its internal array
+    //size() <= capacity()
     std::cout << "size: " << scores.size() << "\tcapacity: " << scores.capacity() << "\n";
+}
+//pass by reference:
+//  prevents a copy
+//  allows access to variables in a different scope
+//  better performance
+void Adder(int& num, int delta)//pass by reference
+{
+    std::cout << "\n" << &num << "\n";
+    num = num + delta;
+}
+
+//when to use pass by reference...
+//- if it is a class, pass by reference
+//  especially if it is a container of other objects!!
+//- or, when you need to change the parameter
+void PrintNames(const std::vector<std::string>& names)
+{
+    //names[0][0] = 'c';// = "Steev!";
+    for (auto& name : names)
+    {
+        std::cout << name << "\n";
+    }
+}
+
+void FillerGrades(std::vector<float>& course)
+{
+    //add 10 grades to the course variable
+    for (int i = 0; i < 10; i++)
+    {
+        course.push_back(rand() % 10001 / 100.0F);
+    }
+
 }
 
 int main()
 {
+    FullSailCourse pg2;
+    pg2.SetName("PG2 2505");
+
+    //a reference variable
+    int num1 = 5;
+    int& numRef = num1;//num REFERS to num1 (another name for num1)
+    numRef = 10;
+    std::cout << num1;
+    std::cout << "\n" << & num1 << "\n";
+    Adder(num1, 5);//int& num = num1;
+    int bats = 10;
+    Adder(bats, 10);//int& num = bats;
+    //Adder(15);
     /*
         ╔══════════════════════════════╗
         ║Parameters: Pass by Reference.║
@@ -53,12 +103,39 @@ int main()
     /*
         CHALLENGE 1:
 
-            Write a method to fill the vector of floats with grades.
+            Write a method to fill the vector of 
+            floats with grades.
             1) pass it in by reference
             2) add 10 grades to the vector
+            3) call the method
+            4) print the vector after calling the method
 
     */
     std::vector<float> grades;
+    FillerGrades(grades);
+    Console::WriteLine("\nPG2 2505", ConsoleColor::Green);
+    for (int i = 0; i < grades.size(); i++)
+    {
+        //if (grades[i] < 59.5) Console::SetForegroundColor(ConsoleColor::Red);
+        //else if(grades[i] < 69.5) Console::SetForegroundColor(ConsoleColor::Yellow);
+        //else if(grades[i] < 79.5) Console::SetForegroundColor(ConsoleColor::Blue);
+        //else if(grades[i] < 89.5) Console::SetForegroundColor(ConsoleColor::White);
+        //else  Console::SetForegroundColor(ConsoleColor::Green);
+        Console::WriteLine(grades[i], 
+            //ternary operator  (condition) ? true block : false block
+            (grades[i] < 59.5) ? ConsoleColor::Red :
+            (grades[i] < 69.5) ? ConsoleColor::Yellow :
+            (grades[i] < 79.5) ? ConsoleColor::Blue :
+            (grades[i] < 89.5) ? ConsoleColor::White :
+            ConsoleColor::Green
+        
+        );
+    }
+    Console::Reset();
+    std::cout << "\n\n\n";
+
+    const int five = 5;
+    
 
 
 
@@ -70,8 +147,12 @@ int main()
 
         This is the way you pass by reference and prevent the method from changing the variable.
     */
+    // vectors: only allowed to acces indexes < size
     std::vector<int> highScores;
-    for (int i = 0; i < 10; ++i)
+    highScores.reserve(10);
+    //int hScore = highScores[5];
+    printInfo(highScores);//size: ?  capacity: ?
+    for (int i = 0; i < 15; ++i)
     {
         highScores.push_back(rand() % 5000);
         printInfo(highScores);//size: ?  capacity: ?
@@ -109,6 +190,41 @@ int main()
     print(highScores);
 
     //erase all scores < 2500
+    for (int i = 0; i < highScores.size(); i++)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+            i--;
+        }
+    }
+    //OR...
+    for (int i = 0; i < highScores.size(); )
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+        }
+        else i++;//only increment when we don't erase
+    }
+    //OR...
+    for (int i = highScores.size() - 1; i >= 0; i--)
+    {
+        if (highScores[i] < 2500)
+        {
+            highScores.erase(highScores.begin() + i);
+        }
+    }
+    //OR...
+    for (auto i = highScores.begin(); i != highScores.end(); )
+    {
+        if (*i < 2500)
+        {
+            i = highScores.erase(i);
+        }
+        else ++i;
+    }
+
 
     print(highScores);
 
