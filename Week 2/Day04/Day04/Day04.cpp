@@ -17,9 +17,19 @@ std::string toUpper(const std::string& original)
     return copy;
 }
 
+//only use recursion in a determinant loop
+// when I know how many times it will loop
 void recursiveLoop(int N)
 {
+    // ALL recursive methods REQUIRE an exit condition
+    // some condition that does not call the method again (or returns)
+    //if(N < 100)//exit condition (base case)
+    if (N >= 100) return;
+    
+    std::cout << N << "\n";
     recursiveLoop(N + 1);
+    Console::WriteLine(N, (ConsoleColor)(rand() % 8));
+    //std::cout << N << "\n";
 }
 
 unsigned long factorial(unsigned int N)
@@ -55,10 +65,50 @@ unsigned long factorial(unsigned int N)
 
 */
 
+//return type MethodName(parameter list)
+// procedure bubbleSort(A : list of sortable items)
+void bubbleSort(std::vector<std::string>& A)
+{
+    //n := length(A)
+    int n = A.size();
+    //repeat
+    //while swapped
+    bool swapped = false;
+    do
+    {
+        //swapped: = false
+        swapped = false;
+
+        //for i := 1 to n - 1 inclusive do
+        for (int i = 1; i <= n - 1; i++)
+        {
+            //if A[i - 1] > A[i] then
+            if (A[i - 1] > A[i])
+            {
+                //swap(A, i - 1, i)
+                //std::swap(A, i - 1, i);
+                //std::string temp = A[i - 1];
+                //A[i - 1] = A[i];
+                //A[i] = temp;
+                //OR...
+                std::swap(A[i - 1], A[i]);
+
+                swapped = true;
+            }//end if
+        }//end for
+        //n := n - 1
+        //n = n - 1;
+        //n--;
+        --n;
+        //n -= 1;
+    } while (swapped);
+}//end procedure
+
+
 int main()
 {
     std::vector<std::string> names = { "Wonder Woman", "Superman", "Batman", "Flash", "Aquaman" };
-    //call your BubbleSort on the names vector.
+    
 
     Console::WriteLine("--UNSORTED--", ConsoleColor::Yellow);
     //print the sorted vector.
@@ -66,6 +116,7 @@ int main()
         std::cout << name << "\n";
 
     //call BubbleSort
+    bubbleSort(names);
 
     Console::WriteLine("--SORTED--", ConsoleColor::Yellow);
     //print the sorted vector.
