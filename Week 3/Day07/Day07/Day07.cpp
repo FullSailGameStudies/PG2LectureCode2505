@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include "Card.h"
 
 
 /*              CLASSESS
@@ -44,6 +45,10 @@
 
 int main()
 {
+    Card card1;
+    card1.SetFace("A");
+    card1.Suit(CardSuit::Spades);
+    card1.Reveal();
     /*
         Lecture code: add a Car class
     
@@ -55,6 +60,10 @@ int main()
             Create a Person class.
             Right-Click the project and select "Add > Class..."
 
+    */
+    /*
+        CHALLENGE:
+            Add an age field and a name field to the Person class
     */
 
 
@@ -73,10 +82,6 @@ int main()
 
     */
 
-    /*
-        CHALLENGE:
-            Add an age field and a name field to the Person class
-    */
 
 
 
