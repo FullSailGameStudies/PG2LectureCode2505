@@ -7,6 +7,11 @@ class Card
 	//access modifiers control the visibility to outside code
 //public: ALL code can see it/callit/changeit
 public:
+	//Constructors (ctors) 
+	// IF you do NOT create a ctor, the compiler gives you a default ctor
+	// a default ctor does not have parameters
+	// IF you create a ctor, the compiler's default ctor is NO LONGER AVAILABLE
+	Card(const std::string& face, CardSuit suit);
 
 	//protected: my class (Card) and all descendent class
 	//  can see it
@@ -47,13 +52,27 @@ public:
 
 	void Suit(CardSuit suit)
 	{
-		if(suit >= CardSuit::Clubs && suit <= CardSuit::Diamonds)
+		if (suit >= CardSuit::Clubs && suit <= CardSuit::Diamonds)
 			suit_ = suit;
 	}
 protected:
 
 	//private: ONLY this class can see it
 	//keep it secret, keep it hidden
+	//1) mark the BASE method as 'virtual'
+	virtual int GetValue(const std::string& face) const
+	{
+		if (face == "J")
+			return 11;
+		else if (face == "Q" )
+			return 12;
+		else if (face == "K")
+			return 13;
+		else if (face == "A")
+			return 1;
+
+		return std::stoi(face);
+	}
 private:
 	bool ValidFace(const std::string& face)
 	{

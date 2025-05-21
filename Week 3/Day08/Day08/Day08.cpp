@@ -6,10 +6,65 @@
 #include "Inheritance.h"
 #include "Polymorphism.h"
 #include "Car.h"
+#include "BlackjackCard.h"
+#include "Pistol.h"
+#include <vector>
 
+//class A
+//{
+//public:
+//	int x;
+//protected:
+//	int y;
+//private:
+//	int z;
+//};
+//
+////modes of inheritance:
+////  public:  the access modifiers don't change
+////		x stays public, y stays protected, z stays private (inaccessible in B)
+////  protected:
+////		x becomes protected, y stays protected, z stays private (inaccessible in B)
+////  private: (default if not specified)
+////		x becomes private in B, y private in B, z stays private (inaccessible in B)
+//class B : public A
+//{
+//
+//};
 
+int Add(int n1, int n2) 
+{
+	return 5;
+}
+//double Add(int n1, int n2)
+//{
+//	return 5;
+//}
+double Add(double n1, double n2)
+{
+	return 5;
+}
+int Add(int n1, int n2, int n3)
+{
+	return 7;
+}
+
+void Counter()
+{
+	static int i = 10;
+	std::cout << i << " ";
+	i++;
+}
 int main()
 {
+	for (int i = 0; i < 10; i++)
+	{
+		Counter();
+	}
+	//compile-time
+	Add(5, 2);
+	Add(5.2, 2.1);
+	Add(5, 2, 1);
 	/*
 		╔═══════════════╗
 		║  Inheritance  ║
@@ -40,6 +95,9 @@ int main()
 
 	*/
 
+	Card c1("A", CardSuit::Spades);
+	BlackjackCard jack("A", CardSuit::Spades);
+
 
 
 	/*
@@ -52,9 +110,13 @@ int main()
 			Add a constructor that calls the base constructor
 
 	*/
-
-
-
+	//Weapon wpn(5, 10);
+	Pistol pewpew(10,50,5,10);
+	Pistol johnWickSpecial(100,500,30,INT_MAX);
+	johnWickSpecial = johnWickSpecial + pewpew;
+	
+	std::vector<int> numbers;
+	//numbers.size;
 
 
 

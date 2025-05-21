@@ -45,9 +45,10 @@
 
 int main()
 {
-    Card card1;
-    card1.SetFace("A");
-    card1.Suit(CardSuit::Spades);
+    Card card1("A", CardSuit::Spades);//calls a ctor to create the object
+    //card1.SetFace("A");
+    //card1.Suit(CardSuit::Spades);
+
     card1.Reveal();
     /*
         Lecture code: add a Car class

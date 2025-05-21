@@ -1,15 +1,16 @@
 #pragma once
 class Weapon
 {
-private:
+protected:
 	int mRange;
-	int mDamage;
+	int mDamage;//non-static data members
 
 public:
 	Weapon(int range, int damage);
 
 	void showMe();
-	int calcDamage();
+	//pure virtual
+	virtual int calcDamage() = 0;
 
 	int range() const
 	{
