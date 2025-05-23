@@ -2,6 +2,9 @@
 //
 
 #include <iostream>
+#include <vector>
+#include "Pistol.h"
+#include "Knife.h"
 
 
 class base
@@ -29,10 +32,12 @@ public:
 };
 
 
+//non-static data members: object level data (ex: year)
+//static data members: class level data (shared across all objects)
 class Car
 {
 public:
-	Car(int year)
+	Car(int year)//ctor
 	{
 		mModelYear = year;
 		mNumberOfCarsMade++;
@@ -41,25 +46,98 @@ public:
 	int mModelYear; //each car has its own model year variable
 	static int mNumberOfCarsMade; //shared by ALL cars
 
+	// static methods DO NOT have a 'this' parameter
+	//   static methods can ONLY access other static members
 	static void reporting()
 	{
-		//std::cout << "Model year: " << mModelYear << "\n"; //ERROR! cannot access non-static members
+		//this->vehicleInfo();
+		//std::cout << "Model Year: " << mModelYear << "\n";
 		std::cout << "Number of cars made: " << mNumberOfCarsMade << "\n";
 	}
 
-	void vehicleInfo() //there's a hidden parameter called 'this'
+	//non-static methods have a "hidden" parameter
+	//  Car* this
+	//non-static methods can access BOTH non-static and static members
+	void vehicleInfo() 
 	{
-		std::cout << "Model Year: " << this->mModelYear << "\n";
+		std::cout << "Model Year: " << mModelYear << "\n";
 	}
 };
 //initialize explicitly using the class name scoping
 int Car::mNumberOfCarsMade = 0;
 
 
+int* Print(int i)//created on the stack
+{
+	int n = 10;//created on the stack
+	std::cout << i << "\t" << n << "\n";
+	return &n;
+}//i and n are REMOVED from the stack when the method finishes
+
+int* CreateHeapMemory()
+{
+	// every time you use 'new', you must have a corresponding
+	// 'delete'
+	// IF you do not, you have a memory leak!!!
+	int* nPtr = new int(5);
+	return nPtr;
+}
 
 int main()
 {
+	//while (true)
+	//{
+	//	int* numberPtr = CreateHeapMemory();
+	//	delete numberPtr;
+	//}
 
+	int* ptr = Print(10);
+	//* on the RIGHT side means DEREFERENCE
+	std::cout << *ptr << "\n";
+
+
+	int num = 5;
+	//& on the LEFT side means reference
+	// int& numRef = 
+	//& on the RIGHT side means address-of
+	//int* numPtr = &num
+	std::cout << &num << "\n";
+	//num stores 5
+	//numPtr stores the memory address to num
+	int* numPtr = &num;
+
+	Car gsRide(2010);
+	Car* gPtr = new Car(2010);
+	gPtr->vehicleInfo();
+	delete gPtr;
+	{
+		//when a unique_ptr goes out of scope, it will delete the memory
+		std::unique_ptr<Car> carPtr = std::make_unique<Car>(2010);
+		(*carPtr).vehicleInfo();
+		carPtr->vehicleInfo();
+	}//the memory is automatically cleaned up
+
+	int otherN = 5;
+	float fNum = otherN;//IMPLICIT cast
+	otherN = (int)fNum;//EXPLICIT cast
+	Pistol bang(50, 100, 10, 5);
+	Weapon wpn = bang;//what happens??
+	//copy the weapon parts of bang to wpn
+	//they are separate objects
+	Weapon* wpnPtr = &bang;//what happens??
+	//UPCAST. cast from a DERIVED type to a BASE type
+	//stores the memory location of bang into wpnPtr
+
+	std::vector<std::unique_ptr<Weapon>> dorasBackpack;
+	dorasBackpack.push_back(std::make_unique<Pistol>(1000,1000,1,1));
+	dorasBackpack.push_back(std::make_unique<Knife>(3,6,15));
+
+	std::cout << "\nDora's Backpack\n";
+	for (auto& wpnItem : dorasBackpack)
+	{
+		wpnItem->showMe();
+		std::cout << "\n";
+	}
 	/*
 		╔════════════╗
 		║ Unique_ptr ║
